@@ -1,4 +1,8 @@
  /**********************************************************************
+ 【改造】
+ 　近接すると（手をかざすと）LEDが光る
+
+
 【ライセンスについて】
 Copyright(c) 2022 by tamanegi
 Released under the MIT license
@@ -53,6 +57,9 @@ void setup()
   //トリガはLOWに設定
   digitalWrite(PIN_TRIGGER, LOW );
   delay(100);
+
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop()
@@ -68,5 +75,15 @@ void loop()
   double DdDistance_mm = DdOneWayTime_us * SOUNDSPEED / 1000;   // 距離（mm）を計算
   Serial.println(DdDistance_mm);
 
+  //近接ならLEDオン　そうでないならオフ
+  if( DdDistance_mm < 100 )
+    {
+    digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+    }
+  else
+    {
+    digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+    }
+  
   delay(100);
 }
